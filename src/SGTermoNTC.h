@@ -1,25 +1,24 @@
 #include <Arduino.h>
-#define S0 18
-#define S1 19
-#define S2 20
-#define S3 21 
+#define S0 14
+#define S1 15
+#define S2 16
+#define S3 17 
 #define RESISTOR 10000
 #define THERMISTOR 10000
 #define NOMINAL 25
 #pragma once
 
 
-
 class TermoNTC{
     public:
-            TermoNTC(int pin_multiplex, int analog_pin_NTC){
-            this->pin_multiplex = pin_multiplex;
-            this->analog_pin_NTC = analog_pin_NTC;
-            }
-        int pin_multiplex;
-        int analog_pin_NTC;
+            TermoNTC(unsigned char pin_multiplex, unsigned char analog_pin_NTC){
+                this->pin_multiplex = pin_multiplex;
+                this->analog_pin_NTC = analog_pin_NTC;
+                }
+        unsigned char pin_multiplex;
+        unsigned char analog_pin_NTC;
         
-        float calc_Term(int analog_pin_NTC){
+        float calc_Term(char analog_pin_NTC){
             int t = analogRead(analog_pin_NTC);
             float temp;
             temp = 1023.0 / t - 1;
