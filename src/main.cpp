@@ -7,10 +7,10 @@
 
 
 //Создание Датчиков потока воды: WaterGO Название_датчика(Пин_ардуино);
-WaterGO class1 (1, 19);
+WaterGO class1 (1, 18);
 WaterGO class2 (2, 19);
-WaterGO class3 (3, 19);
-WaterGO class4 (4, 19);
+WaterGO class3 (3, 20);
+WaterGO class4 (4, 21);
         
 //Создание ТЕРМОМЕТРОВ MAX6675: TERMO_MAX Название_датчика(Пин_ардуино);
 TERMO_MAX TEMP_fire (49);

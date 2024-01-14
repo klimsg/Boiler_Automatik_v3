@@ -36,22 +36,22 @@ class WaterGO{
     unsigned long loopTimer1;
 
     int get_WaterGO (){
-        if(namber == 1 & millis() - loopTimer1 > 5000){
+        if((namber == 1) & (millis() - loopTimer1 > 5000)){
             loopTimer1 = millis();
             literperhour = (pulse_frequency1 / 5 * 60 / 447);
             pulse_frequency1 = 0;
             }
-        if(namber == 2 & millis() - loopTimer1 > 5000){
+        if((namber == 2) & (millis() - loopTimer1 > 5000)){
             loopTimer1 = millis();
             literperhour = (pulse_frequency2 / 5 * 60 / 447);
             pulse_frequency2 = 0;
             }
-        if(namber == 3 & millis() - loopTimer1 > 5000){
+        if((namber == 3) & (millis() - loopTimer1 > 5000)){
             loopTimer1 = millis();
             literperhour = (pulse_frequency3 / 5 * 60 / 447);
             pulse_frequency3 = 0;
             }
-        if(namber == 4 & millis() - loopTimer1 > 5000){
+        if((namber == 4) & (millis() - loopTimer1 > 5000)){
             loopTimer1 = millis();
             literperhour = (pulse_frequency4 / 5 * 60 / 447);
             pulse_frequency4 = 0;
