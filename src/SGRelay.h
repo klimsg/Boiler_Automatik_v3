@@ -1,11 +1,6 @@
 #pragma once
 #include <Arduino.h>
 
-enum {
-    OFF = 0,
-    ON = 1,
-    UNCONNECTED = 2
-    };
 
 class Relay{
     public:
@@ -15,13 +10,13 @@ class Relay{
         unsigned char pin_Relay;
         unsigned char relay;     
 
-        void ON_Switch(){
+        void Switch_ON(){
             Relay::relay = ON;
             pinMode(pin_Relay, OUTPUT); 
             digitalWrite(pin_Relay, ON);
             };
 
-        void OFF_Switch(){
+        void Switch_OFF(){
             Relay::relay = OFF;
             pinMode(pin_Relay, OUTPUT); 
             digitalWrite(pin_Relay, OFF);

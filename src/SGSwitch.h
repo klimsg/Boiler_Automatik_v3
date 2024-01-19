@@ -5,11 +5,6 @@
 #define S2 16
 #define S3 17 
 
-enum {
-    OFF = 0,
-    ON = 1,
-    UNCONNECTED = 2
-    };
 
 
 class Switch{
@@ -20,26 +15,9 @@ class Switch{
                 }
         unsigned char pin_multiplex;
         unsigned char analog_pin_Switch;
+        unsigned int condition;
                 
-        int look_Switch(char analog_pin_Switch){
-            int Switch = analogRead(analog_pin_Switch);
-            if (Switch > 800)
-            {
-                Switch = ON;
-            }
-
-            else if (301 < Switch < 801)
-            {
-                Switch = OFF;
-            }
-            else
-            {
-                Switch = UNCONNECTED;
-            }
-            return Switch;
-            };
-
-        int get_Switch(){
+        void reed_Switch(){
             pinMode(S0, OUTPUT); 
             pinMode(S1, OUTPUT); 
             pinMode(S2, OUTPUT); 
@@ -68,6 +46,18 @@ class Switch{
             digitalWrite(S2, all_pin_multiplex[pin_multiplex][2]);
             digitalWrite(S3, all_pin_multiplex[pin_multiplex][3]);
 
-            return look_Switch(analog_pin_Switch);
+            condition = analogRead(analog_pin_Switch);
+            if (condition >= 800)
+            {
+                condition = ON;
+            }
+            else if (301 < condition && condition < 800)
+            {
+                condition = OFF;
+            }
+            else
+            {
+                condition = UNCONNECTED;
+            }
             };
     };

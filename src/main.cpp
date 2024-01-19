@@ -1,4 +1,11 @@
 #include <Arduino.h>
+
+enum {
+    OFF = 0,
+    ON = 1,
+    UNCONNECTED = 2
+    };
+
 #include "SGTermoNTC.h"
 #include "SGTermoMAX6675.h"
 #include "SGWaterGO.h"
@@ -20,6 +27,7 @@ Switch switch_window(2,3);
 Switch switch_level_water(3,3);
 Switch switch_door_furnace(4,3);
 Switch switch_down_door(5,3);
+Switch switch_flow_register (6, 3);
 
 //Создание Датчиков потока воды: WaterGO Название_датчика(Пин_ардуино);
 WaterGO sensor_flow_register (1, 18);
@@ -86,7 +94,7 @@ void loop(){
     int literperhour2 = sensor_flow_return_tank.get_WaterGO();
     int literperhour3 = sensor_flow_return_home.get_WaterGO();
     int literperhour4 = class4.get_WaterGO();
-// Опрос датчиков
+// Опрос датчиков температуры NTC
 temp_Tank1_lvl1.reed_tempNTC();
 temp_Tank1_lvl2.reed_tempNTC();
 temp_Tank1_lvl3.reed_tempNTC();
@@ -112,6 +120,10 @@ temp_return_home.reed_tempNTC();
 temp_flue.reed_tempNTC();
 temp_return_Tank.reed_tempNTC();
 temp_air.reed_tempNTC();
+
+// Опрос концевых выключателей
+switch_flow_register.reed_Switch();
+
 
 // Вывод в терминал
 /*        if(millis() - loopTimer > 3000){
@@ -151,20 +163,40 @@ temp_air.reed_tempNTC();
 //Сценарии поведения системы
         if(millis() - loopTimer1 > 3000){
             loopTimer1 = millis();
-// Аварийная ситуация закипает котёл
+            // Аварийная ситуация: закипает котёл
             if (125 > temp2_out_register.temper > 95 || 125 > temp1_out_register.temper > 95){
                 //Включить аварийный клапан
-                emergency_crane.ON_Switch();
+                emergency_crane.Switch_ON();
                 //Включить насос котла 1
                 if (pump1_register.relay == OFF){
-                    pump1_register.ON_Switch();
+                    pump1_register.Switch_ON();
                     }
                 //Включить насос котла 2
                 if (pump2_register.relay == OFF){
-                    pump2_register.ON_Switch();
+                    pump2_register.Switch_ON();
                     }
                 
             }
+            // Аварийная ситуация: перестал работать насос на котле
+            if (switch_flow_register.condition == OFF)
+            {
+                //Если насос котла 1 включен, включить насос котла 2 и выключить насос 1
+                if (pump1_register.relay == ON){
+                    pump2_register.Switch_ON();
+                    pump1_register.Switch_OFF();
+                    //Отправить оповещение в телеграмм??
+                    }
+                //Если насос котла 2 включен, включить насос котла 1 и выключить насос 2
+                else if (pump2_register.relay == ON)
+                {
+                    pump1_register.Switch_ON();
+                    pump2_register.Switch_OFF();
+                    //Отправить оповещение в телеграмм??
+                }
+
+                
+            }
+            
             
 
                 }
