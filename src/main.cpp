@@ -2,9 +2,14 @@
 #include "SGTermoNTC.h"
 #include "SGTermoMAX6675.h"
 #include "SGWaterGO.h"
+#include "SGSwitch.h"
 
-
-
+//Создание концевых датчиков: Switch Название_датчика(Пин_мультиплекса,Аналоговый_пин_ардуино);
+Switch switch_door(1,3);
+Switch switch_window(2,3);
+Switch switch_level_water(3,3);
+Switch switch_door_furnace(4,3);
+Switch switch_down_door(5,3);
 
 //Создание Датчиков потока воды: WaterGO Название_датчика(Пин_ардуино);
 WaterGO sensor_flow_register (1, 18);
@@ -18,7 +23,6 @@ TERMO_MAX TEMP_furnace(52);
 TERMO_MAX TEMP_exhaust(50);
 
 //Создание термометров NTC :TermoNTC Название_датчика(Пин_мультиплекса,Аналоговый_пин_ардуино);
-TermoNTC TEMP0(0,1);
 TermoNTC term_Tank1_lvl1 (1,1);
 TermoNTC term_Tank1_lvl2 (2,1);
 TermoNTC term_Tank1_lvl3 (3,1);
