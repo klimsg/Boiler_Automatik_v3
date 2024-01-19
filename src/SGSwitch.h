@@ -6,9 +6,9 @@
 #define S3 17 
 
 enum {
-    OFF,
-    ON,
-    UNCONNECTED
+    OFF = 0,
+    ON = 1,
+    UNCONNECTED = 2
     };
 
 
@@ -21,7 +21,7 @@ class Switch{
         unsigned char pin_multiplex;
         unsigned char analog_pin_Switch;
                 
-        float look_Switch(char analog_pin_Switch){
+        int look_Switch(char analog_pin_Switch){
             int Switch = analogRead(analog_pin_Switch);
             if (Switch > 800)
             {
@@ -39,7 +39,7 @@ class Switch{
             return Switch;
             };
 
-        float get_Switch(){
+        int get_Switch(){
             pinMode(S0, OUTPUT); 
             pinMode(S1, OUTPUT); 
             pinMode(S2, OUTPUT); 

@@ -3,6 +3,15 @@
 #include "SGTermoMAX6675.h"
 #include "SGWaterGO.h"
 #include "SGSwitch.h"
+#include "SGRelay.h"
+
+
+//Создание управляемых реле: Relay Название_датчика(Пин_ардуино);
+Relay pump1_register(1);
+Relay pump2_register(2);
+Relay pump_radiator(3);
+Relay pump_floor(4);
+Relay pump_boiler(5);
 
 //Создание концевых датчиков: Switch Название_датчика(Пин_мультиплекса,Аналоговый_пин_ардуино);
 Switch switch_door(1,3);
@@ -16,7 +25,7 @@ WaterGO sensor_flow_register (1, 18);
 WaterGO sensor_flow_return_tank (2, 19);
 WaterGO sensor_flow_return_home (3, 20);
 WaterGO class4 (4, 21);
-        
+
 //Создание ТЕРМОМЕТРОВ MAX6675: TERMO_MAX Название_датчика(Пин_ардуино);
 TERMO_MAX TEMP_fire (49);
 TERMO_MAX TEMP_furnace(52);
