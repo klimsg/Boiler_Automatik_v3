@@ -7,9 +7,9 @@
 
 
 //Создание Датчиков потока воды: WaterGO Название_датчика(Пин_ардуино);
-WaterGO class1 (1, 18);
-WaterGO class2 (2, 19);
-WaterGO class3 (3, 20);
+WaterGO sensor_flow_register (1, 18);
+WaterGO sensor_flow_return_tank (2, 19);
+WaterGO sensor_flow_return_home (3, 20);
 WaterGO class4 (4, 21);
         
 //Создание ТЕРМОМЕТРОВ MAX6675: TERMO_MAX Название_датчика(Пин_ардуино);
@@ -36,39 +36,35 @@ TermoNTC term_Tank2_lvl6 (6,0);
 TermoNTC term_Tank2_lvl7 (7,0);
 TermoNTC term_Tank2_lvl8 (8,0);
 
-
-
 void setup(){
-  Serial.begin(9600);
+    Serial.begin(9600);
 //  WaterGOsetup();
-   pinMode(class1.Pin_waterGO, INPUT);
-        digitalWrite(class1.Pin_waterGO, HIGH);
-                pinMode(class2.Pin_waterGO, INPUT);
-        digitalWrite(class2.Pin_waterGO, HIGH);
-                pinMode(class3.Pin_waterGO, INPUT);
-        digitalWrite(class3.Pin_waterGO, HIGH);
+    pinMode(sensor_flow_register.Pin_waterGO, INPUT);
+        digitalWrite(sensor_flow_register.Pin_waterGO, HIGH);
+                pinMode(sensor_flow_return_tank.Pin_waterGO, INPUT);
+        digitalWrite(sensor_flow_return_tank.Pin_waterGO, HIGH);
+                pinMode(sensor_flow_return_home.Pin_waterGO, INPUT);
+        digitalWrite(sensor_flow_return_home.Pin_waterGO, HIGH);
                 pinMode(class4.Pin_waterGO, INPUT);
         digitalWrite(class4.Pin_waterGO, HIGH);
 
-            attachInterrupt(digitalPinToInterrupt(class1.Pin_waterGO), getFlow1, RISING);
-            attachInterrupt(digitalPinToInterrupt(class2.Pin_waterGO), getFlow2, RISING);
-            attachInterrupt(digitalPinToInterrupt(class3.Pin_waterGO), getFlow3, RISING);
+            attachInterrupt(digitalPinToInterrupt(sensor_flow_register.Pin_waterGO), getFlow1, RISING);
+            attachInterrupt(digitalPinToInterrupt(sensor_flow_return_tank.Pin_waterGO), getFlow2, RISING);
+            attachInterrupt(digitalPinToInterrupt(sensor_flow_return_home.Pin_waterGO), getFlow3, RISING);
             attachInterrupt(digitalPinToInterrupt(class4.Pin_waterGO), getFlow4, RISING);   
 }
 
 unsigned long loopTimer;
 
 void loop(){
-    int literperhour1 = class1.get_WaterGO();
-    int literperhour2 = class2.get_WaterGO();
-    int literperhour3 = class3.get_WaterGO();
+    int literperhour1 = sensor_flow_register.get_WaterGO();
+    int literperhour2 = sensor_flow_return_tank.get_WaterGO();
+    int literperhour3 = sensor_flow_return_home.get_WaterGO();
     int literperhour4 = class4.get_WaterGO();
-  //      literperhour = WaterGO();
 
         if(millis() - loopTimer > 3000){
             loopTimer = millis();
-            Serial.print(" Т0 = ");
-            Serial.print(TEMP0.get_tempNTC());
+
             Serial.print(" term_Tank1_lvl1 = ");
             Serial.print(term_Tank1_lvl1.get_tempNTC());
             Serial.print(" term_Tank1_lvl2 = ");
@@ -82,6 +78,21 @@ void loop(){
             Serial.print(" term_Tank1_lvl6 = ");
             Serial.print(term_Tank1_lvl6.get_tempNTC());
             Serial.println();
+
+            Serial.print(" term_Tank2_lvl1 = ");
+            Serial.print(term_Tank2_lvl1.get_tempNTC());
+            Serial.print(" term_Tank2_lvl2 = ");
+            Serial.print(term_Tank2_lvl2.get_tempNTC());
+            Serial.print(" term_Tank2_lvl3 = ");
+            Serial.print(term_Tank2_lvl3.get_tempNTC());
+            Serial.print(" term_Tank2_lvl4 = ");
+            Serial.print(term_Tank2_lvl4.get_tempNTC());
+            Serial.print(" term_Tank2_lvl5 = ");
+            Serial.print(term_Tank2_lvl5.get_tempNTC());
+            Serial.print(" term_Tank2_lvl6 = ");
+            Serial.print(term_Tank2_lvl6.get_tempNTC());
+            Serial.println();
+
             Serial.print("TEMP_fire = ");
             Serial.print(TEMP_fire.get_TEMP_MAX());
             Serial.print(" TEMP_furnace = ");
@@ -90,8 +101,7 @@ void loop(){
             Serial.print(TEMP_exhaust.get_TEMP_MAX());
             Serial.println();
 
-//            Serial.print(literperhour);
-//            Serial.println(" Л/мин");
+
             Serial.print(literperhour1);
             Serial.print(" Л/мин   ");
             Serial.print(literperhour2);
@@ -103,4 +113,4 @@ void loop(){
             Serial.println();
             Serial.println();
         }
-  }
+    }
