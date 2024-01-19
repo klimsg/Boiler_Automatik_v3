@@ -17,6 +17,7 @@ class TermoNTC{
                 }
         unsigned char pin_multiplex;
         unsigned char analog_pin_NTC;
+        float temper;
         
         float calc_Term(char analog_pin_NTC){
             int t = analogRead(analog_pin_NTC);
@@ -29,7 +30,7 @@ class TermoNTC{
             temp=(int)(10.0*temp)/10.0;
             return temp;
             };
-        float get_tempNTC(){
+        void reed_tempNTC(){
             pinMode(S0, OUTPUT); 
             pinMode(S1, OUTPUT); 
             pinMode(S2, OUTPUT); 
@@ -58,10 +59,10 @@ class TermoNTC{
             digitalWrite(S2, all_pin_multiplex[pin_multiplex][2]);
             digitalWrite(S3, all_pin_multiplex[pin_multiplex][3]);
         //      delay(2);
-            return calc_Term(analog_pin_NTC);
+                temper = calc_Term(analog_pin_NTC);
             };
     };
 /*
 float calc_Term(int analog_pin_NTC);
-float get_tempNTC(int pin_multiplex, int analog_pin_NTC);
+float reed_tempNTC(int pin_multiplex, int analog_pin_NTC);
 */
